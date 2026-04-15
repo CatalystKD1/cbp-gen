@@ -1,2 +1,16 @@
-# cbp-gen
-Currently a W.I.P. A Code Boilerplate Generator made using Go. Generates code boilerplates for the programming languages I must most. Supported on all platforms.
+# Sprint 1
+
+## Spring tasks
+- Pick a programming language 
+- Make a new file in the current directory 
+- Make a file using the commandline/shell 
+- Run a commandline/shell command
+
+## Programming language
+I will pick Go as my language of choice. It has plenty of useful commanads that handle command line access. Additionally,
+it has commands to check what Operating System is being run.
+
+## Additional tasks
+- Learn how ot use the os package to create files from any path
+- Need to detect which system the current file is running on (use runtime package)
+- Learn how to detect files
