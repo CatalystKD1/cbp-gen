@@ -3,7 +3,6 @@ package cpp
 import (
 	"os"
 	"strings"
-	"fmt"
 )
 
 // test variables
@@ -16,7 +15,7 @@ func GenCpp(name string, includes []string, typeF string, nameSpaces []string) {
 	var output string
 	output += name + ".cpp"
 
-	data, err := os.ReadFile("gen/c/c.tmpl")
+	data, err := os.ReadFile("gen/cpp/cpp.tmpl")
 	if err != nil {
 		panic(err)
 	}
@@ -34,14 +33,10 @@ func GenCpp(name string, includes []string, typeF string, nameSpaces []string) {
 	}
 
 	result = strings.ReplaceAll(result, "{includes}", includeBlock)
-	result = strings.ReplaceAll(result, "{name}", name)
-	result = strings.ReplaceAll(result, "{type}", typeF)
-
-
-	// issue with result not getting namesoace ir printing it out properly
 	result = strings.ReplaceAll(result, "{namespace}", nameSpaceBlock)
 
-	fmt.Println(result) // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+	result = strings.ReplaceAll(result, "{name}", name)
+	result = strings.ReplaceAll(result, "{type}", typeF)
 
 	err = os.WriteFile(output, []byte(result), 0644)
 	if err != nil {

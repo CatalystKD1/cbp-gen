@@ -4,6 +4,7 @@ import (
 	"cbp-gen/gen/c"
 	cpp "cbp-gen/gen/cpp"
 	gol "cbp-gen/gen/go"
+	"cbp-gen/gen/html"
 	"flag"
 	"fmt"
 	"log"
@@ -31,9 +32,11 @@ func main() {
 	cFlag := flag.Bool("c", false, "Generate a C file")
 	cppFlag := flag.Bool("cpp", false, "Generate a C++ file")
 	goFlag := flag.Bool("go", false, "Generate a Go file")
+	htmlFlag := flag.Bool("html", false, "Generate a HTML file")
 
 	// name flags
 	nameFlag := flag.String("name", "main", "Name of the output file")
+	titleFlag := flag.String("title", "Hello World", "Title of the HTML page")
 
 	// type flag
 	typeFlag := flag.String("type", "int", "Type of the function in the file")
@@ -56,6 +59,8 @@ func main() {
 		gol.GenGo(*nameFlag, includes, *packageFlag)
 	} else if *cppFlag {
 		cpp.GenCpp(*nameFlag, includes, *typeFlag, nameSpaces)
+	} else if *htmlFlag {
+		html.GenHtml(*nameFlag, *titleFlag)
 	} else {
 		fmt.Print("Wrong flag")
 	}

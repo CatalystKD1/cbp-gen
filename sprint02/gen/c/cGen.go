@@ -30,7 +30,7 @@ func GenC(name string, includes []string, typeF string) {
 	result = strings.ReplaceAll(result, "{name}", name)
 	result = strings.ReplaceAll(result, "{type}", typeF)
 
-	err = os.WriteFile("output", []byte(result), 0644)
+	err = os.WriteFile(output, []byte(result), 0644)
 	if err != nil {
 		panic(err)
 	}
