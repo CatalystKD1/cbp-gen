@@ -1,8 +1,9 @@
-package c
+package cpp
 
 import (
 	"os"
 	"strings"
+	"fmt"
 )
 
 // test variables
@@ -10,9 +11,10 @@ import (
 var includes []string*/
 
 
-func GenC(name string, includes []string, typeF string) {
+func GenCpp(name string, includes []string, typeF string, nameSpaces []string) {
+
 	var output string
-	output += name + ".c"
+	output += name + ".cpp"
 
 	data, err := os.ReadFile("gen/c/c.tmpl")
 	if err != nil {
@@ -25,12 +27,19 @@ func GenC(name string, includes []string, typeF string) {
 	for _, include := range includes {
 		includeBlock += "#include <" + include + ">\n"
 	}
-	result = strings.ReplaceAll(result, "{includes}", includeBlock)
 
+	nameSpaceBlock := ""
+	for _, nameSpace := range nameSpaces {
+		nameSpaceBlock += "using namespace " + nameSpace + ";\n"
+	}
+
+	result = strings.ReplaceAll(result, "{includes}", includeBlock)
 	result = strings.ReplaceAll(result, "{name}", name)
 	result = strings.ReplaceAll(result, "{type}", typeF)
+	result = strings.ReplaceAll(result, "{namespace}", nameSpaceBlock)
 
-	err = os.WriteFile("output", []byte(result), 0644)
+	
+	err = os.WriteFile(output, []byte(result), 0644)
 	if err != nil {
 		panic(err)
 	}

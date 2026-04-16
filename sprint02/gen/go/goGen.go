@@ -1,4 +1,4 @@
-package c
+package gol
 
 import (
 	"os"
@@ -10,11 +10,11 @@ import (
 var includes []string*/
 
 
-func GenC(name string, includes []string, typeF string) {
+func GenGo(name string, includes []string, packages string) {
 	var output string
-	output += name + ".c"
+	output += name + ".go"
 
-	data, err := os.ReadFile("gen/c/c.tmpl")
+	data, err := os.ReadFile("gen/go/go.tmpl")
 	if err != nil {
 		panic(err)
 	}
@@ -23,14 +23,14 @@ func GenC(name string, includes []string, typeF string) {
 	// Build the full includes string first
 	includeBlock := ""
 	for _, include := range includes {
-		includeBlock += "#include <" + include + ">\n"
+		includeBlock += "\"" + include + "\"\n"
 	}
 	result = strings.ReplaceAll(result, "{includes}", includeBlock)
 
 	result = strings.ReplaceAll(result, "{name}", name)
-	result = strings.ReplaceAll(result, "{type}", typeF)
+	result = strings.ReplaceAll(result, "{package}", packages)
 
-	err = os.WriteFile("output", []byte(result), 0644)
+	err = os.WriteFile(output, []byte(result), 0644)
 	if err != nil {
 		panic(err)
 	}
