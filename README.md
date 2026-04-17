@@ -119,9 +119,8 @@ cbp-gen -react-c -name Navbar -ts
 |--------|--------|-------|
 | Sprint 01 | ✅ Complete | Language selection, file creation, OS detection, path handling |
 | Sprint 02 | ✅ Complete | C template, CLI flags, user customization (name, type) |
-| Sprint 03 | 🔲 Planned | Front-end UI, user input fields, Go template |
-| Sprint 04 | 🔲 Planned | React boilerplate with `npm` installer integration |
-| Sprint 05 | 🔲 Planned | UI polish, project website & download page |
+| Sprint 03 | 🔲 Planned | Front-end UI, user input fields, function arguments |
+| Sprint 04 | 🔲 Planned | UI polish, project website & download page |
 
 ---
 
