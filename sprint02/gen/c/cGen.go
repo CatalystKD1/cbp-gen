@@ -1,32 +1,31 @@
 package c
 
 import (
+	"embed"
 	"os"
 	"strings"
 )
 
-// test variables
-/*var name string
-var includes []string*/
-
+//go:embed c.tmpl
+var templateFiles embed.FS
 
 func GenC(name string, includes []string, typeF string) {
 	var output string
 	output += name + ".c"
 
-	data, err := os.ReadFile("gen/c/c.tmpl")
+	data, err := templateFiles.ReadFile("c.tmpl")
 	if err != nil {
 		panic(err)
 	}
 
 	result := string(data)
+
 	// Build the full includes string first
 	includeBlock := ""
 	for _, include := range includes {
 		includeBlock += "#include <" + include + ">\n"
 	}
 	result = strings.ReplaceAll(result, "{includes}", includeBlock)
-
 	result = strings.ReplaceAll(result, "{name}", name)
 	result = strings.ReplaceAll(result, "{type}", typeF)
 

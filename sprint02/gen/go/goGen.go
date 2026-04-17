@@ -3,7 +3,10 @@ package gol
 import (
 	"os"
 	"strings"
+	"embed"
 )
+
+var templateFiles embed.FS
 
 // test variables
 /*var name string
@@ -14,7 +17,7 @@ func GenGo(name string, includes []string, packages string) {
 	var output string
 	output += name + ".go"
 
-	data, err := os.ReadFile("gen/go/go.tmpl")
+	data, err :=  templateFiles.ReadFile("go.tmpl")
 	if err != nil {
 		panic(err)
 	}

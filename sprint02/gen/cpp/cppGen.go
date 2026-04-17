@@ -3,11 +3,10 @@ package cpp
 import (
 	"os"
 	"strings"
+	"embed"
 )
 
-// test variables
-/*var name string
-var includes []string*/
+var templateFiles embed.FS
 
 
 func GenCpp(name string, includes []string, typeF string, nameSpaces []string) {
@@ -15,7 +14,7 @@ func GenCpp(name string, includes []string, typeF string, nameSpaces []string) {
 	var output string
 	output += name + ".cpp"
 
-	data, err := os.ReadFile("gen/cpp/cpp.tmpl")
+	data, err :=  templateFiles.ReadFile("cpp.tmpl")
 	if err != nil {
 		panic(err)
 	}

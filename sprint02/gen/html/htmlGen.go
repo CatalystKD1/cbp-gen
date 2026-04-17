@@ -3,7 +3,10 @@ package html
 import (
 	"os"
 	"strings"
+	"embed"
 )
+
+var templateFiles embed.FS
 
 // test variables
 /*var name string
@@ -17,7 +20,7 @@ func GenHtml(name string, title string) {
 	}
 	output += name + ".html"
 
-	data, err := os.ReadFile("gen/html/html.tmpl")
+	data, err :=  templateFiles.ReadFile("hhtml.tmpl")
 	if err != nil {
 		panic(err)
 	}

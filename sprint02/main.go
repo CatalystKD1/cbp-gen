@@ -5,6 +5,7 @@ import (
 	cpp "cbp-gen/gen/cpp"
 	gol "cbp-gen/gen/go"
 	"cbp-gen/gen/html"
+	"cbp-gen/gen/react"
 	"flag"
 	"fmt"
 	"log"
@@ -33,6 +34,7 @@ func main() {
 	cppFlag := flag.Bool("cpp", false, "Generate a C++ file")
 	goFlag := flag.Bool("go", false, "Generate a Go file")
 	htmlFlag := flag.Bool("html", false, "Generate a HTML file")
+	componentFlag := flag.Bool("react-c", false, "Generate a React Component (jsx) file")
 
 	// name flags
 	nameFlag := flag.String("name", "main", "Name of the output file")
@@ -40,6 +42,8 @@ func main() {
 
 	// type flag
 	typeFlag := flag.String("type", "int", "Type of the function in the file")
+	tsFlag := flag.Bool("ts", false, "Starts a TypeScript React document")
+	reactFlag := flag.Bool("react", false, "Start a React project using npm")
 
 	// include / import flags
 	var includes StringSlice
@@ -61,7 +65,11 @@ func main() {
 		cpp.GenCpp(*nameFlag, includes, *typeFlag, nameSpaces)
 	} else if *htmlFlag {
 		html.GenHtml(*nameFlag, *titleFlag)
-	} else {
+	} else if *reactFlag {
+		react.ReactInit(*nameFlag, *tsFlag)
+	} else if *componentFlag {
+		react.GenComponent(*nameFlag, *tsFlag)
+	}else {
 		fmt.Print("Wrong flag")
 	}
 }
