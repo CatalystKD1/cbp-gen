@@ -45,6 +45,10 @@ func main() {
 	tsFlag := flag.Bool("ts", false, "Starts a TypeScript React document")
 	reactFlag := flag.Bool("react", false, "Start a React project using npm")
 
+	/*stringFlag :=
+	intFlag :=
+	boolFlag :=*/
+
 	// include / import flags
 	var includes StringSlice
 	flag.Var(&includes, "i", "Include/import files")
@@ -60,7 +64,7 @@ func main() {
 	if *cFlag {
 		c.GenC(*nameFlag, includes, *typeFlag)
 	} else if *goFlag {
-		gol.GenGo(*nameFlag, includes, *packageFlag)
+		gol.GenGo(*nameFlag, includes, *typeFlag, *packageFlag)
 	} else if *cppFlag {
 		cpp.GenCpp(*nameFlag, includes, *typeFlag, nameSpaces)
 	} else if *htmlFlag {

@@ -13,7 +13,7 @@ var templateFiles embed.FS
 var includes []string*/
 
 
-func GenGo(name string, includes []string, packages string) {
+func GenGo(name string, includes []string, typeF string, packages string) {
 	var output string
 	output += name + ".go"
 
@@ -22,14 +22,23 @@ func GenGo(name string, includes []string, packages string) {
 		panic(err)
 	}
 
+	/*
+		Make explicite void functions
+	*/
+
 	result := string(data)
 	// Build the full includes string first
 	includeBlock := ""
 	for _, include := range includes {
 		includeBlock += "\"" + include + "\"\n"
 	}
-	result = strings.ReplaceAll(result, "{includes}", includeBlock)
 
+	if (name == "main" && typeF == "int") {
+		typeF = ""
+	}
+
+	result = strings.ReplaceAll(result, "{includes}", includeBlock)
+	result = strings.ReplaceAll(result, "{type}", typeF)
 	result = strings.ReplaceAll(result, "{name}", name)
 	result = strings.ReplaceAll(result, "{package}", packages)
 
