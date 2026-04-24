@@ -35,6 +35,11 @@ func main() {
 	goFlag := flag.Bool("go", false, "Generate a Go file")
 	htmlFlag := flag.Bool("html", false, "Generate a HTML file")
 	componentFlag := flag.Bool("react-c", false, "Generate a React Component (jsx) file")
+	javaFlag := flag.Bool("java", false, "Generate a Java file")
+	/*kotlinFlag
+	rustFlag
+	phpFlag
+	csharpFlag*/
 
 	// name flags
 	nameFlag := flag.String("name", "main", "Name of the output file")
@@ -73,7 +78,9 @@ func main() {
 		react.ReactInit(*nameFlag, *tsFlag)
 	} else if *componentFlag {
 		react.GenComponent(*nameFlag, *tsFlag)
-	}else {
-		fmt.Print("Wrong flag")
+	} else if *javaFlag {
+		
+	} else {
+		fmt.Print("Please write a flag for a programming language.")
 	}
 }
