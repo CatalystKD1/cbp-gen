@@ -36,6 +36,7 @@ func GenC(name string, includes []string, typeF string, args []models.FuncArgs) 
 			argsBlock += arg.ArgType + " " + arg.ArgName + ", "
 		}
 	}
+	
 	result = strings.ReplaceAll(result, "{includes}", includeBlock)
 	result = strings.ReplaceAll(result, "{name}", name)
 	result = strings.ReplaceAll(result, "{type}", typeF)

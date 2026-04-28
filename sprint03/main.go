@@ -76,7 +76,7 @@ func main() {
 	typeFlag := flag.String("type", "int", "Type of the function in the file")
 	tsFlag := flag.Bool("ts", false, "Starts a TypeScript React document")
 	reactFlag := flag.Bool("react", false, "Start a React project using npm")
-	pubFlag := flag.Bool("pub", false, "Used to determine if a function/class is public")
+	pubFlag := flag.Bool("pub", true, "Used to determine if a function/class is public")
 
 	// include / import flags
 	var includes StringSlice
@@ -111,7 +111,7 @@ func main() {
 	} else if *componentFlag {
 		react.GenComponent(*nameFlag, *tsFlag)
 	} else if *javaFlag {
-		java.GenJava(*nameFlag, includes, *typeFlag, *pubFlag, *classFlag)
+		java.GenJava(*nameFlag, includes, *typeFlag, *pubFlag, *classFlag, allArgs)
 	} else {
 		fmt.Print("Please write a flag for a programming language.")
 	}
