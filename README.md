@@ -2,7 +2,7 @@
 
 A fast, native CLI tool for generating boilerplate code across multiple programming languages. Built with Go, `cbp-gen` runs on any operating system and requires no runtime. Just download and go.
 
-> 🚧 **Current Status: Sprint 02 Complete**
+> 🚧 **Current Status: Working on Sprint 3**
 
 ---
 
@@ -49,7 +49,7 @@ sudo mv cbp-gen-darwin-arm64 /usr/local/bin/cbp-gen
 
 ```bash
 git clone https://github.com/your-username/cbp-gen.git
-cd cbp-gen
+cd cbp-gen/sprint03
 go build -o cbp-gen .
 ```
 
@@ -119,8 +119,9 @@ cbp-gen -react-c -name Navbar -ts
 |--------|--------|-------|
 | Sprint 01 | ✅ Complete | Language selection, file creation, OS detection, path handling |
 | Sprint 02 | ✅ Complete | C template, CLI flags, user customization (name, type) |
-| Sprint 03 | 🔲 Planned | Front-end UI, user input fields, function arguments |
-| Sprint 04 | 🔲 Planned | UI polish, project website & download page |
+| Sprint 03 | 🔲 Planned | More languages, implement arguments, error handling, header files, (optional) class generation  |
+| Sprint 04 | 🔲 Planned | Front-end GUI, allow more user inputs and customization |
+| Sprint 05 | 🔲 Planned | UI polish, project website & download page |
 
 ---
 
@@ -128,9 +129,9 @@ cbp-gen -react-c -name Navbar -ts
 
 - Runs on **macOS, Linux, and Windows**
 - Built with **Go** for speed and zero-dependency binaries
-- Supports **user customization** (names, types, includes, namespaces)
+- Supports **user customization** (names, types, includes, namespaces, function arguments)
 - Scales easily to new languages over time
-- Designed to eventually include a **React front-end**
+- Designed to generate React projects
 
 ---
 
