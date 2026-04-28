@@ -1,4 +1,4 @@
-package gol
+package java
 
 import (
 	"os"
@@ -8,7 +8,7 @@ import (
 
 var templateFiles embed.FS
 
-func GenGo(name string, includes []string, typeF string, publicF bool, class string) {
+func GenJava(name string, includes []string, typeF string, publicF bool, class string) {
 	var output string
 	output += name + ".java"
 
