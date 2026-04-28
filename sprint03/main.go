@@ -86,33 +86,112 @@ func main() {
 	packageFlag := flag.String("pack", "main", "Name of the Go Package")
 
 	var nameSpaces StringSlice
-	flag.Var(&nameSpaces, "ns", "Add namespacescd for cpp file")
+	flag.Var(&nameSpaces, "ns", "Add namespaces for cpp file")
 
 	// function arguments!
 	var argList StringSlice
 	flag.Var(&argList, "arg", "Add arguments to your function, should follow this format: 'type:name'")
-	
-	// new section
+
 	flag.Parse()
 
-	// get all args and deals with them
+	// --- Validation ---
+
+	// Count how many language flags are set
+	langFlags := map[string]bool{
+		"c":       *cFlag,
+		"cpp":     *cppFlag,
+		"go":      *goFlag,
+		"html":    *htmlFlag,
+		"react-c": *componentFlag,
+		"java":    *javaFlag,
+		"react":   *reactFlag,
+	}
+
+	langCount := 0
+	for _, v := range langFlags {
+		if v {
+			langCount++
+		}
+	}
+
+	// No language flag — print help and exit
+	if langCount == 0 {
+		fmt.Println("cbp-gen: A boilerplate code generator")
+		fmt.Println("\nUsage: cbp-gen -<language> [options]")
+		fmt.Println("\nAvailable flags:")
+		flag.PrintDefaults()
+		return
+	}
+
+	// More than one language flag
+	if langCount > 1 {
+		log.Fatal("Error: only one language flag can be used at a time")
+	}
+
+	// Flags that don't support args
+	noArgFlags := map[string]bool{
+		"html":  *htmlFlag,
+		"react": *reactFlag,
+	}
+	for name, set := range noArgFlags {
+		if set && len(argList) > 0 {
+			log.Fatalf("Error: cannot use -arg flag with -%s", name)
+		}
+	}
+
+	// Flags that don't support includes
+	noIncludeFlags := map[string]bool{
+		"html":    *htmlFlag,
+		"react":   *reactFlag,
+		"react-c": *componentFlag,
+	}
+	for name, set := range noIncludeFlags {
+		if set && len(includes) > 0 {
+			log.Fatalf("Error: cannot use -i flag with -%s", name)
+		}
+	}
+
+	// -ts is only for react and react-c
+	if *tsFlag && !*reactFlag && !*componentFlag {
+		log.Fatal("Error: -ts flag can only be used with -react or -react-c")
+	}
+
+	// -ns is only for cpp
+	if len(nameSpaces) > 0 && !*cppFlag {
+		log.Fatal("Error: -ns flag can only be used with -cpp")
+	}
+
+	// -pack is only for go
+	if *packageFlag != "main" && !*goFlag {
+		log.Fatal("Error: -pack flag can only be used with -go")
+	}
+
+	// -title is only for html
+	if *titleFlag != "Hello World" && !*htmlFlag {
+		log.Fatal("Error: -title flag can only be used with -html")
+	}
+
+	// -class is only for java
+	if *classFlag != "main" && !*javaFlag {
+		log.Fatal("Error: -class flag can only be used with -java")
+	}
+
+	// --- Generation ---
 	allArgs := getArgs(argList)
 
 	if *cFlag {
 		c.GenC(*nameFlag, includes, *typeFlag, allArgs)
 	} else if *goFlag {
-		gol.GenGo(*nameFlag, includes, *typeFlag, *packageFlag)
+		gol.GenGo(*nameFlag, includes, *typeFlag, *packageFlag, allArgs)
 	} else if *cppFlag {
-		cpp.GenCpp(*nameFlag, includes, *typeFlag, nameSpaces)
+		cpp.GenCpp(*nameFlag, includes, *typeFlag, nameSpaces, allArgs)
 	} else if *htmlFlag {
 		html.GenHtml(*nameFlag, *titleFlag)
 	} else if *reactFlag {
 		react.ReactInit(*nameFlag, *tsFlag)
 	} else if *componentFlag {
-		react.GenComponent(*nameFlag, *tsFlag)
+		react.GenComponent(*nameFlag, *tsFlag, allArgs)
 	} else if *javaFlag {
 		java.GenJava(*nameFlag, includes, *typeFlag, *pubFlag, *classFlag, allArgs)
-	} else {
-		fmt.Print("Please write a flag for a programming language.")
 	}
 }

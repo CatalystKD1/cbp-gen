@@ -1,10 +1,11 @@
 package react
 
 import (
+	"cbp-gen/models"
+	"embed"
 	"math/rand"
 	"os"
 	"strings"
-	"embed"
 )
 
 var templateFiles embed.FS
@@ -19,7 +20,7 @@ func RandomComponentName() string {
 	return name
 }
 
-func GenComponent(name string, ts bool) {
+func GenComponent(name string, ts bool, args []models.FuncArgs) {
 	var output string
 	if ts {
 		output += name + ".tsx"
@@ -38,7 +39,18 @@ func GenComponent(name string, ts bool) {
 
 	result := string(data)
 
+	argsBlock := ""
+	last := args[len(args) - 1]
+	for _, arg := range args {
+		if (arg.ArgName == last.ArgName) && (arg.ArgType == last.ArgType) {
+			argsBlock += arg.ArgType + " " + arg.ArgName
+		} else {
+			argsBlock += arg.ArgType + " " + arg.ArgName + ", "
+		}
+	}
+
 	result = strings.ReplaceAll(result, "{name}", name)
+	result = strings.ReplaceAll(result, "{args}", argsBlock)
 
 	err = os.WriteFile(output, []byte(result), 0644)
 	if err != nil {
