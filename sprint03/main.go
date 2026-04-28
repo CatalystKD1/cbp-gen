@@ -62,8 +62,8 @@ func main() {
 	htmlFlag := flag.Bool("html", false, "Generate a HTML file")
 	componentFlag := flag.Bool("react-c", false, "Generate a React Component (jsx) file")
 	javaFlag := flag.Bool("java", false, "Generate a Java file")
-	/*kotlinFlag
-	rustFlag
+	//kotlinFlag
+	/*rustFlag
 	phpFlag
 	csharpFlag*/
 
@@ -192,6 +192,6 @@ func main() {
 	} else if *componentFlag {
 		react.GenComponent(*nameFlag, *tsFlag, allArgs)
 	} else if *javaFlag {
-		java.GenJava(*nameFlag, includes, *typeFlag, *pubFlag, *classFlag, allArgs)
+		java.GenJava(*nameFlag, includes, *typeFlag, *pubFlag, *classFlag, allArgs, *packageFlag)
 	}
 }

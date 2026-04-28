@@ -10,7 +10,7 @@ import (
 //go:embed java.tmpl
 var templateFiles embed.FS
 
-func GenJava(name string, includes []string, typeF string, publicF bool, class string, args []models.FuncArgs) {
+func GenJava(name string, includes []string, typeF string, publicF bool, class string, args []models.FuncArgs, packages string) {
 	var output string
 	output += name + ".java"
 
